@@ -3,6 +3,7 @@ from django.contrib.auth.models import User,auth
 from django.contrib import messages
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from .models import Client
 # Create your views here.
 def index(request):
     return render(request,'index.html')
@@ -30,6 +31,8 @@ def register(request):
             else:
                 user = User.objects.create_user(first_name=first_name, password=password,email=email,username=username)
                 user.save()
+                client = Client(user=user)
+                client.save()
                 auth.login(request, user)
                 return redirect('home')
         else:
@@ -61,3 +64,7 @@ def signin(request):
 
 def home(request):
     return render(request,'home.html')
+
+def logout(request):
+    auth.logout(request)
+    return redirect('/')
