@@ -1,2 +1,17 @@
 <h1>Welcome {{request.user.first_name}}</h1>
-<a href = "{% url 'logout' %}">Signout</a>
+
+<div style="align-content: right; text-align: right;">
+    <a href="{% url 'logout' %}" class="text-info">Logout</a>
+</div>
+{% if curr_user == 'Client' %}
+<p>hi Client</p>
+<a href = "{% url 'new_plan' %}" class="text-info">New Plan</a>
+<a href = "{% url 'get_plan' 'pending' %}" class='text-info'>Pending Plans</a>
+<a href = "{% url 'get_plan' 'new' %}" class = 'text-info'>New plans</a>
+{% endif %}
+{% if curr_user == 'Admin' %}
+<a href = "{% url 'plan new'%}"class='text-info'>Get New Plan Requests</a>
+<a href = "{% url 'get_plan' 'admin' %}" class='text-info'>Get new Plan Requests</a>
+{% endif %}
+{% if curr_user == 'Worker'%}
+{% endif %}

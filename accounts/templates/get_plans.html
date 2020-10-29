@@ -1,0 +1,48 @@
+{% extends 'header.html'%}
+{% block content%}
+<table class="table table-bordered">
+    <tr>
+      <th>Id</th>
+      <th>Client Name</th>
+      <th>Length</th>
+      <th>Width</th>
+      <th>Floors</th>
+      <th>Parking</th>
+      <th>Wall Thickness</th>
+      <th>Sectional Plan</th>
+      <th>Drawing Plan</th>
+      <th>Floor Plan</th>
+      <th>Elevated Plan</th>
+      <th>Click To Update</th>
+    </tr>
+    {% for plan in plans %}
+    <tr>
+      <td>{{ plan.id }}</td>
+      <td>{{ plan.client.user.first_name }}</td>
+      <td>{{ plan.length }}</td>
+      <td>{{ plan.width}}</td>
+      <td>{{ plan.floors }}</td>
+      <td>{{ plan.parking }}</td>
+      <td>{{ plan.wall_thickness }}</td>
+      <td><a href="{{media_url}}{{ plan.sectional_plan.url}}">
+            <img src="{{media_url}}{{ plan.sectional_plan.url }}" class="rounded-circle" width="100px" height="100px">
+        </a></td>
+      <td><a href="{{media_url}}{{ plan.drawing_plan.url }}">
+        <img src="{{media_url}}{{ plan.drawing_plan.url}}" class="rounded-circle" width="100px" height="100px">
+    </a></td>
+      <td><a href="{{ plan.floor_plan.url}}">
+        <img src="{{ plan.floor_plan.url}}" class="rounded-circle" width="100px" height="100px">
+    </a></td>
+      <td><a href="{{ plan.elevated_plan.url}}">
+        <img src="{{ plan.elevated_plan.url}}" class="rounded-circle" width="100px" height="100px">
+    </a></td>
+      <td>
+        <form action="{% url 'update_plan' plan.id %}">
+          {%csrf_token%}
+          <button name="status" class="form-control status">{{plan.status}}</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock content %}

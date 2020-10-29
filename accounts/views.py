@@ -3,7 +3,10 @@ from django.contrib.auth.models import User,auth
 from django.contrib import messages
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from .models import Client
+from .models import Client,Plan,Construction,Admin
+from .forms import PlanRegistrationForm,PlanUpdateForm
+from django.http import HttpResponse
+from django.db.models import Q
 # Create your views here.
 def index(request):
     return render(request,'index.html')
@@ -63,8 +66,52 @@ def signin(request):
         return render(request, 'login.html')
 
 def home(request):
-    return render(request,'home.html')
+    if Client.objects.get(user=request.user):
+        curr_user = 'Client'
+    elif Admin.objects.get(user=request.user):
+        curr_user ='Admin'
+    elif Worker.objects.get(user=request.user):
+        curr_user = 'Worker'
+    return render(request,'home.html',{'curr_user':curr_user})
 
 def logout(request):
     auth.logout(request)
     return redirect('/')
+
+def new_plan(request):
+    if(request.method =='POST'):
+        form = PlanRegistrationForm(request.POST)
+        if form.is_valid():
+            length = form.cleaned_data['length']
+            width = form.cleaned_data['width']
+            rooms = form.cleaned_data['rooms']
+            wall_thickness = form.cleaned_data['wall_thickness']
+            floors = form.cleaned_data['floors']
+            parking = form.cleaned_data['parking']
+            client = Client.objects.get(user=request.user)
+            plan = Plan(length=length,width=width,rooms=rooms,wall_thickness=wall_thickness,floors=floors,parking=parking,client=client)
+            plan.save()
+            return HttpResponse('Thank you!!Our team will shortly design the best plan suited for you')
+        else:
+            form = PlanRegistrationForm()
+    else:
+        form = PlanRegistrationForm()
+    return render(request, 'new_plan.html', {'form':form})
+
+def get_plan(request, status):
+   plans = Plan.objects.filter(Q(status = status),client = Client.objects.get(user=request.user) )
+   return render(request,'get_plans.html',{'plans':plans})
+def update_plan(request,id):
+    plan = Plan.objects.get(id=id)
+    if request.method == 'POST':
+        plan = Plan.objects.get(id=request.POST.get('plan_id', None))
+        form = PlanUpdateForm(request.POST,request.FILES,instance=plan)
+        print(request.POST.get('plan_id'))
+        if form.is_valid():
+            form.save()
+            messages.success(request,f'Plan is updated successfully')
+        else:
+            form = PlanUpdateForm(instance=plan)
+    else:
+        form = PlanUpdateForm(instance = plan)
+    return render(request,'update_plan.html',{'form':form, 'id':id})
