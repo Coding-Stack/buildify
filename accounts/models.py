@@ -38,10 +38,6 @@ class Plan(models.Model):
 
 class Construction(models.Model):
     client = models.ForeignKey(to=Client,on_delete=models.CASCADE)
-<<<<<<< HEAD
-=======
-    workers = models.ForeignKey(to=Worker,on_delete=models.CASCADE)
->>>>>>> dd13ede8aac762fd12de23108787baf314a31a74
     plan = models.OneToOneField(to=Plan,on_delete=models.CASCADE)
     status_choices_const = [
         ('excavation','excavation'),
