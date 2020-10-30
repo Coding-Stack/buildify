@@ -43,7 +43,7 @@ class Plan(models.Model):
     elevated_plan = models.ImageField(upload_to = 'elevated',blank=True,default='default.png')
 
 class Construction(models.Model):
-    client = models.OneToOneField(to=Client,on_delete=models.CASCADE)
+    client = models.ForeignKey(to=Client,on_delete=models.CASCADE)
     workers = models.ForeignKey(to=Worker,on_delete=models.CASCADE)
     plan = models.OneToOneField(to=Plan,on_delete=models.CASCADE)
     status = [

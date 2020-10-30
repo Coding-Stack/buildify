@@ -66,11 +66,11 @@ def signin(request):
         return render(request, 'login.html')
 
 def home(request):
-    if Client.objects.get(user=request.user):
+    if Client.objects.filter(user=request.user):
         curr_user = 'Client'
-    elif Admin.objects.get(user=request.user):
+    elif Admin.objects.filter(user=request.user):
         curr_user ='Admin'
-    elif Worker.objects.get(user=request.user):
+    elif Worker.objects.filter(user=request.user):
         curr_user = 'Worker'
     return render(request,'home.html',{'curr_user':curr_user})
 
@@ -88,7 +88,7 @@ def new_plan(request):
             wall_thickness = form.cleaned_data['wall_thickness']
             floors = form.cleaned_data['floors']
             parking = form.cleaned_data['parking']
-            client = Client.objects.get(user=request.user)
+            client = Client.objects.filter(user=request.user)
             plan = Plan(length=length,width=width,rooms=rooms,wall_thickness=wall_thickness,floors=floors,parking=parking,client=client)
             plan.save()
             return HttpResponse('Thank you!!Our team will shortly design the best plan suited for you')
@@ -101,6 +101,7 @@ def new_plan(request):
 def get_plan(request, status):
    plans = Plan.objects.filter(Q(status = status),client = Client.objects.get(user=request.user) )
    return render(request,'get_plans.html',{'plans':plans})
+   
 def update_plan(request,id):
     plan = Plan.objects.get(id=id)
     if request.method == 'POST':
