@@ -66,12 +66,21 @@ def signin(request):
         return render(request, 'login.html')
 
 def home(request):
+<<<<<<< HEAD
     if Admin.objects.filter(user=request.user).first():
         curr_user = 'Admin'
     elif Worker.objects.filter(user=request.user).first():
         curr_user ='Worker'
     else:
         curr_user = 'Client'
+=======
+    if Client.objects.filter(user=request.user):
+        curr_user = 'Client'
+    elif Admin.objects.filter(user=request.user):
+        curr_user ='Admin'
+    elif Worker.objects.filter(user=request.user):
+        curr_user = 'Worker'
+>>>>>>> dd13ede8aac762fd12de23108787baf314a31a74
     return render(request,'home.html',{'curr_user':curr_user})
 
 def logout(request):
@@ -88,7 +97,11 @@ def new_plan(request):
             wall_thickness = form.cleaned_data['wall_thickness']
             floors = form.cleaned_data['floors']
             parking = form.cleaned_data['parking']
+<<<<<<< HEAD
             client = Client.objects.filter(user=request.user).first()
+=======
+            client = Client.objects.filter(user=request.user)
+>>>>>>> dd13ede8aac762fd12de23108787baf314a31a74
             plan = Plan(length=length,width=width,rooms=rooms,wall_thickness=wall_thickness,floors=floors,parking=parking,client=client)
             plan.save()
             return HttpResponse('Thank you!!Our team will shortly design the best plan suited for you')
@@ -99,6 +112,7 @@ def new_plan(request):
     return render(request, 'new_plan.html', {'form':form})
 
 def get_plan(request, status):
+<<<<<<< HEAD
    print(status)
    if status.startswith('admin'):
        isAdmin = True
@@ -121,6 +135,11 @@ def get_plan(request, status):
            plans = []
    return render(request,'get_plans.html',{'plans':plans,'isAdmin':isAdmin})
 
+=======
+   plans = Plan.objects.filter(Q(status = status),client = Client.objects.get(user=request.user) )
+   return render(request,'get_plans.html',{'plans':plans})
+   
+>>>>>>> dd13ede8aac762fd12de23108787baf314a31a74
 def update_plan(request,id):
     if request.method == 'POST':
         plan = Plan.objects.get(id=request.POST.get('plan_id', None))

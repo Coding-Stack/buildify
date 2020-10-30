@@ -1,24 +1,25 @@
-<h1>Welcome {{request.user.first_name}}</h1>
+{% extends 'header.html' %}
+{% block content %}
+<h1 class="welcome-message">Welcome {{request.user.first_name}}</h1>
 
-<div style="align-content: right; text-align: right;">
-    <a href="{% url 'logout' %}" class="text-info">Logout</a>
-</div>
+
 {% if curr_user == 'Client' %}
+<div>
 <p>hi Client</p>
-<div style="display: flex; justify-content: space-evenly;">
-<a href = "{% url 'new_plan' %}" class="text-info">New Plan Requests</a>
-<a href = "{% url 'get_plan' 'pending' %}" class='text-info'>My Plans</a>
-<a href = "{% url 'get_construction' 'client' %}" class ='text-info'>My Constructions</a>
+<h2 class="welcome-message">What can we do for you?</h2>
+<div class="links">
+    <a href = "{% url 'new_plan' %}" class="text-info">Generate Request for New Plan</a>
+    <a href = "{% url 'get_plan' 'pending' %}" class='text-info'>Pending Plans</a>
+    <a href = "{% url 'get_plan' 'new' %}" class = 'text-info'>New plans</a>
 </div>
 {% endif %}
 {% if curr_user == 'Admin' %}
-<p>Hi Admin</p>
-<div style="display: flex; justify-content: space-evenly;">
 <a href = "{% url 'new_plan'%}"class='text-info'>Start a Plan</a>
 <a href = "{% url 'get_plan' 'adminnew' %}" class='text-info'>All Plan Requests</a>
 <a href ="{% url 'get_construction' 'adminexcavation' %}" class='text-info'>Constructions</a>
 <a href ="{% url 'get_worker' %}" class='text-info'>Workers</a>
-</div>
 {% endif %}
 {% if curr_user == 'Worker'%}
 {% endif %}
+
+{% endblock content %}
