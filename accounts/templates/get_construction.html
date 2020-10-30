@@ -1,0 +1,46 @@
+{% extends 'header.html'%}
+{% block content%}
+{% if isAdmin%}
+<div style="display: flex; justify-content: space-evenly; margin: 30px 0;">
+  <a href="{% url 'get_construction' 'adminexcavation' %}" class="btn btn-danger">Excavation</a>
+  <a href="{% url 'get_construction' 'adminfoundation' %}" class="btn btn-warning">Foundation</a>
+  <a href="{% url 'get_construction' 'adminfinished' %}" class="btn btn-success">Finished</a>
+</div>
+{% endif %}
+{% if constructions%}
+<table class="table table-bordered">
+    <tr>
+      <th>Id</th>
+      <th>Client Name</th>
+      <th>Plan</th>
+      <th>Status</th>
+      <th>Estimated Cost</th>
+      <th>Get Workers</th>
+      <th>Update Construction</th>
+    </tr>
+    {% for const in constructions %}
+    <tr>
+      <td>{{ const.id }}</td>
+      <td>{{ const.client.user.first_name }}</td>
+      <td>{{ const.plan }}</td>
+      <td>{{ const.status }}</td>
+      <td>{{ const.estimated_cost }}</td>
+      <td>
+        <form action="{% url 'get_const_worker' const.id %}">
+          {%csrf_token%}
+          <button name="status" class="btn btn-primary">Get Worker</button>
+        </form>
+      </td>
+      <td>
+        <form action="{% url 'update_construction' const.id %}">
+          {%csrf_token%}
+          <button name="status" class="btn btn-success">Update Construction</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% else %}
+<h1>Oops! Your construction Yet to reach this stage :))</h1>
+{% endif %}
+{% endblock content %}

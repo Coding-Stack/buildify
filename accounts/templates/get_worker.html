@@ -1,0 +1,39 @@
+{% extends 'header.html'%}
+{% block content%}
+{% if isAdmin%}
+<div style="display: flex; justify-content: space-evenly; margin: 30px 0;">
+  <a href="{% url 'get_construction' 'adminexcavation' %}" class="btn btn-danger">Excavation</a>
+  <a href="{% url 'get_construction' 'adminfoundation' %}" class="btn btn-warning">Foundation</a>
+  <a href="{% url 'get_construction' 'adminfinished' %}" class="btn btn-success">Finished</a>
+</div>
+{% endif %}
+{% if workers%}
+<table class="table table-bordered">
+    <tr>
+      <th>Id</th>
+      <th>Worker Name</th>
+      <th>Wage</th>
+      <th>Previous Records</th>
+      <th>Curr. Working Constructions</th>
+      <th>Update Worker</th>
+    </tr>
+    {% for worker in workers %}
+    <tr>
+      <td>{{ worker.id }}</td>
+      <td>{{ worker.user.first_name }}</td>
+      <td>{{ worker.wage }}</td>
+      <td>{{ worker.prev_record}}</td>
+      <td>{{ worker.construction }}</td>
+      <td>
+        <form action="{% url 'update_worker' worker.id %}">
+          {%csrf_token%}
+          <button name="status" class="btn btn-primary">Update Worker</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% else %}
+<h1>You have No Workers,Add Few!!</h1>
+{% endif %}
+{% endblock content %}

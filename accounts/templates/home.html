@@ -5,13 +5,20 @@
 </div>
 {% if curr_user == 'Client' %}
 <p>hi Client</p>
-<a href = "{% url 'new_plan' %}" class="text-info">New Plan</a>
-<a href = "{% url 'get_plan' 'pending' %}" class='text-info'>Pending Plans</a>
-<a href = "{% url 'get_plan' 'new' %}" class = 'text-info'>New plans</a>
+<div style="display: flex; justify-content: space-evenly;">
+<a href = "{% url 'new_plan' %}" class="text-info">New Plan Requests</a>
+<a href = "{% url 'get_plan' 'pending' %}" class='text-info'>My Plans</a>
+<a href = "{% url 'get_construction' 'client' %}" class ='text-info'>My Constructions</a>
+</div>
 {% endif %}
 {% if curr_user == 'Admin' %}
-<a href = "{% url 'plan new'%}"class='text-info'>Get New Plan Requests</a>
-<a href = "{% url 'get_plan' 'admin' %}" class='text-info'>Get new Plan Requests</a>
+<p>Hi Admin</p>
+<div style="display: flex; justify-content: space-evenly;">
+<a href = "{% url 'new_plan'%}"class='text-info'>Start a Plan</a>
+<a href = "{% url 'get_plan' 'adminnew' %}" class='text-info'>All Plan Requests</a>
+<a href ="{% url 'get_construction' 'adminexcavation' %}" class='text-info'>Constructions</a>
+<a href ="{% url 'get_worker' %}" class='text-info'>Workers</a>
+</div>
 {% endif %}
 {% if curr_user == 'Worker'%}
 {% endif %}
