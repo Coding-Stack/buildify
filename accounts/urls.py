@@ -28,6 +28,9 @@ urlpatterns = [
     path('new_material',v.new_material,name='new_material'),
     path('get_material',v.get_material,name='get_material'),
     path('update_material/<int:id>',v.update_material,name='update_material'),
+
+    path('worker_form',v.worker_form,name='worker_form'),
+    path('apply',v.apply,name='apply')
 ]
 
 from django.conf import settings

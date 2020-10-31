@@ -75,10 +75,10 @@ class Construction(models.Model):
         return 'construction by'+str(self.client)
 
 class Worker(models.Model):
-    wage = models.FloatField(blank=True, null=True)
+    wage = models.FloatField(blank=True,null=True,default=0)
     prev_record = models.IntegerField()
     user = models.ForeignKey(to=User,on_delete=models.CASCADE)
-    construction = models.ForeignKey(to=Construction, on_delete=models.CASCADE, blank=True, null=True)
+    construction = models.ForeignKey(to=Construction, blank=True,null=True,on_delete=models.CASCADE)
     work_done_choices = [
         ('Electrician','Electrician'),
         ('Carpenter','Carpenter'),
