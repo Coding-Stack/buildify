@@ -9,6 +9,9 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <body>
+    {% for message in messages %}
+    <h3 style='color:red;'>{{message}}</h3>
+    {% endfor %}
     <div id="login">
         <h3 class="text-center text-white pt-5">Login form</h3>
         <div class="container">

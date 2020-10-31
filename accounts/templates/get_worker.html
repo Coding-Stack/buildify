@@ -1,5 +1,8 @@
 {% extends 'header.html'%}
 {% block content%}
+{% for message in messages %}
+<h3>{{message}}</h3>
+{% endfor %}
 {% if isAdmin%}
 <div style="display: flex; justify-content: space-evenly; margin: 30px 0;">
   <a href="{% url 'get_construction' 'adminexcavation' %}" class="btn btn-danger">Excavation</a>

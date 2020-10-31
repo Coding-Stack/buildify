@@ -4,9 +4,9 @@
 <h3>{{message}}</h3>
 {% endfor %}
 <div style="display: flex; justify-content: space-evenly; margin: 30px 0;">
-  <a href="{% url 'get_construction' 'excavation' %}" class="btn btn-danger">Excavation</a>
-  <a href="{% url 'get_construction' 'foundation' %}" class="btn btn-warning">Foundation</a>
-  <a href="{% url 'get_construction' 'finished' %}" class="btn btn-success">Finished</a>
+  <a href="{% url 'get_adminconstruction' 'excavation' %}" class="btn btn-danger">Excavation</a>
+  <a href="{% url 'get_adminconstruction' 'foundation' %}" class="btn btn-warning">Foundation</a>
+  <a href="{% url 'get_adminconstruction' 'finished' %}" class="btn btn-success">Finished</a>
 </div>
 {% if constructions%}
 <table class="table table-bordered">
@@ -16,7 +16,8 @@
       <th>Plan</th>
       <th>Status</th>
       <th>Estimated Cost</th>
-      <th>Open Construction</th>
+      <th>Get Workers</th>
+      <th>Update Construction</th>
     </tr>
     {% for const in constructions %}
     <tr>
@@ -26,8 +27,15 @@
       <td>{{ const.status }}</td>
       <td>{{ const.estimated_cost }}</td>
       <td>
-        <form action="{% url 'get_s_construction' const.id %}">
-          <button name='status' class="btn btn-warning">View Construction</button>
+        <form action="{% url 'get_const_worker' const.id %}">
+          {%csrf_token%}
+          <button name="status" class="btn btn-primary">Get Worker</button>
+        </form>
+      </td>
+      <td>
+        <form action="{% url 'update_construction' const.id %}">
+          {%csrf_token%}
+          <button name="status" class="btn btn-success">Update Construction</button>
         </form>
       </td>
     </tr>

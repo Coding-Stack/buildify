@@ -22,11 +22,11 @@ class Plan(models.Model):
     floors = models.IntegerField()
     parking = models.BooleanField(default=True)
     status_choices_plan = [
-        ('new','new'),
-        ('pending','pending'),
+        ('new','New'),
+        ('pending','Pending'),
         ('modification','Ask For Modification'),
-        ('accepted','accepted'),
-        ('rejected','rejected'),
+        ('accepted','Accepted'),
+        ('rejected','Rejected'),
     ]
     status = models.CharField(max_length = 20, choices=status_choices_plan, default ='new')
     drawing_plan = models.ImageField(upload_to = 'drawing',blank=True,default='default.png')
@@ -35,6 +35,27 @@ class Plan(models.Model):
     elevated_plan = models.ImageField(upload_to = 'elevated',blank=True,default='default.png')
     def __str__(self):
         return 'Plan by '+str(self.client)
+
+
+class Material(models.Model):
+    name = models.CharField(max_length=100)
+    type_choices = [
+        ('Cement','Cement'),
+        ('Steel','Steel'),
+        ('Sanitary_ware','Sanitary_ware'),
+        ('Sand','Sand'),
+        ('Aggregate','Aggregate'),
+        ('Tiles','Tiles'),
+        ('CP_Fitting','CP_Fitting'),
+        ('Paints','Paints'),
+        ('Other','Other'),
+    ]
+    material_type = models.CharField(max_length=20,choices=type_choices,default='Other')
+    cost = models.IntegerField()
+    material_img = models.ImageField(upload_to='material',default='default.png')
+    def __str__(self):
+        return self.name
+
 
 class Construction(models.Model):
     client = models.ForeignKey(to=Client,on_delete=models.CASCADE)
@@ -45,15 +66,19 @@ class Construction(models.Model):
         ('finished','finished'),
     ]
     status = models.CharField(max_length=20,choices=status_choices_const,default='excavation')
+    materials = models.ManyToManyField(to=Material,blank=True,null=True)
+    excavation_img = models.ImageField(upload_to='construction',default='default.png')
+    foundation_img = models.ImageField(upload_to='construction',default='default.png')
+    finished_img = models.ImageField(upload_to='construction',default='default.png')
     estimated_cost = models.IntegerField(default=2000000)
     def __str__(self):
         return 'construction by'+str(self.client)
 
 class Worker(models.Model):
-    wage = models.FloatField()
+    wage = models.FloatField(blank=True,null=True,default=0)
     prev_record = models.IntegerField()
     user = models.ForeignKey(to=User,on_delete=models.CASCADE)
-    construction = models.ForeignKey(to=Construction, on_delete=models.CASCADE)
+    construction = models.ForeignKey(to=Construction, blank=True,null=True,on_delete=models.CASCADE)
     work_done_choices = [
         ('Electrician','Electrician'),
         ('Carpenter','Carpenter'),
@@ -62,6 +87,13 @@ class Worker(models.Model):
         ('Cons_worker','Cons_worker'),
         ('None','None'),
     ]
-    work_done = models.CharField(max_length=20,choices=work_done_choices,default='None')
+    work_done = models.CharField(max_length=100,choices=work_done_choices,default='None')
     def __str__(self):
         return self.user.first_name
+
+
+def isAdmin(user):
+    if Admin.objects.filter(user=user).first():
+        return True
+    else:
+        return False
