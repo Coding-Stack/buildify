@@ -1,0 +1,42 @@
+{% extends 'header.html'%}
+{% block content%}
+{% for message in messages %}
+<h3>{{message}}</h3>
+{% endfor %}
+<div style="display: flex; justify-content: space-evenly; margin: 30px 0;">
+  <a href="{% url 'new_material'  %}" class="btn btn-danger">New Material</a>
+  <a href="{% url 'get_material'  %}" class="btn btn-warning">All Materials</a>
+</div>
+{% if materials%}
+<table class="table table-bordered">
+    <tr>
+      <th>Id</th>
+      <th>Material Image</th>
+      <th>Material Name</th>
+      <th>Type</th>
+      <th>Cost</th>
+    </tr>
+    {% for material in materials %}
+    <tr>
+      <td>{{ material.id }}</td>
+      <td>
+        <a href="{{media_url}}{{ material.material_img.url}}">
+        <img src="{{media_url}}{{ material.material_img.url }}" class="square" width="150px" height="150px">
+        </a>
+      </td>
+      <td>{{ material.name }}</td>
+      <td>{{ material.material_type }}</td>
+      <td>{{ material.cost }}</td>
+      <td>
+        <form action="{% url 'update_material' material.id %}">
+          {%csrf_token%}
+          <button name="status" class="btn btn-primary">Update Material</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% else %}
+<h1>No Materials, Add few :))</h1>
+{% endif %}
+{% endblock content %}

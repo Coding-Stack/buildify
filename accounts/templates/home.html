@@ -11,15 +11,20 @@
     <a href = "{% url 'new_plan' %}" class="text-info">Generate Request for New Plan</a>
     <a href = "{% url 'get_plan' 'pending' %}" class='text-info'>Pending Plans</a>
     <a href = "{% url 'get_plan' 'new' %}" class = 'text-info'>New plans</a>
+    <a href = "{% url 'get_construction' 'excavation'%}" class='text-info'>My Construction</a>
 </div>
 {% endif %}
 {% if curr_user == 'Admin' %}
-<a href = "{% url 'new_plan'%}"class='text-info'>Start a Plan</a>
-<a href = "{% url 'get_plan' 'adminnew' %}" class='text-info'>All Plan Requests</a>
-<a href ="{% url 'get_construction' 'adminexcavation' %}" class='text-info'>Constructions</a>
-<a href ="{% url 'get_worker' %}" class='text-info'>Workers</a>
+<div style="display: flex; justify-content: space-evenly; margin: 30px 0;" >
+<a href = "{% url 'new_plan'%}"class='btn btn-success'>Start a Plan</a>
+<a href = "{% url 'get_adminplan' 'new' %}" class='btn btn-danger'>All Plan Requests</a>
+<a href ="{% url 'get_adminconstruction' 'excavation' %}" class='btn btn-primary'>Constructions</a>
+<a href ="{% url 'get_worker' %}" class='btn btn-warning'>Workers</a>
+<a href ="{% url 'get_material' %}" class='btn btn-primary'>Materials</a>
+</div>
 {% endif %}
 {% if curr_user == 'Worker'%}
+<p>Hi Worker</p>
 {% endif %}
 
 {% endblock content %}

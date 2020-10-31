@@ -1,5 +1,8 @@
 {% extends 'header.html'%}
 {% block content%}
+{% for message in messages %}
+<h3>{{message}}</h3>
+{% endfor %}
 {% if isAdmin%}
 <div style="display: flex; justify-content: space-evenly; margin: 30px 0;">
   <a href="{% url 'get_construction' 'adminexcavation' %}" class="btn btn-danger">Excavation</a>
@@ -7,7 +10,7 @@
   <a href="{% url 'get_construction' 'adminfinished' %}" class="btn btn-success">Finished</a>
 </div>
 {% endif %}
-{% if workers%}
+{% if workers %}
 <table class="table table-bordered">
     <tr>
       <th>Id</th>
@@ -15,7 +18,9 @@
       <th>Wage</th>
       <th>Previous Records</th>
       <th>Curr. Working Constructions</th>
+      {% if isAdmin%}
       <th>Update Worker</th>
+      {% endif %}
     </tr>
     {% for worker in workers %}
     <tr>
@@ -24,12 +29,13 @@
       <td>{{ worker.wage }}</td>
       <td>{{ worker.prev_record}}</td>
       <td>{{ worker.construction }}</td>
+      {% if isAdmin %}
       <td>
         <form action="{% url 'update_worker' worker.id %}">
-          {%csrf_token%}
           <button name="status" class="btn btn-primary">Update Worker</button>
         </form>
       </td>
+      {% endif %}
     </tr>
     {% endfor %}
   </table>

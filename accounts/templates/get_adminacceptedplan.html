@@ -3,7 +3,6 @@
 {% for message in messages %}
 <h3>{{message}}</h3>
 {% endfor %}
-{% if isAdmin%}
 <div style="display: flex; justify-content: space-evenly; margin: 30px 0;">
   <a href = "{% url 'get_adminplan' 'new' %}" class='btn btn-primary'>New Request Plans</a>
   <a href = "{% url 'get_adminplan' 'pending' %}" class='btn btn-warning'>Pending Plans</a>
@@ -11,15 +10,6 @@
   <a href = "{% url 'get_adminacceptedplan' %}" class='btn btn-success'>Accepted Plans</a>
   <a href = "{% url 'get_adminplan' 'rejected' %}" class='btn btn-danger'>Rejected Plans</a>
 </div>
-{% else %}
-<div style="display: flex; justify-content: space-evenly; margin: 30px 0;">
-  <a href = "{% url 'get_plan' 'new' %}" class='btn btn-primary'>Your Request Plans</a>
-  <a href = "{% url 'get_plan' 'pending' %}" class='btn btn-warning'>Pending Plans</a>
-  <a href = "{% url 'get_plan' 'modification' %}" class='btn btn-warning'>Modification Requests</a>
-  <a href = "{% url 'get_plan' 'accepted' %}" class='btn btn-success'>Accepted Plans</a>
-  <a href = "{% url 'get_plan' 'rejected' %}" class='btn btn-danger'>Rejected Plans</a>
-</div>
-{% endif %}
 <table class="table table-bordered">
     <tr>
       <th>Id</th>
@@ -33,7 +23,9 @@
       <th>Drawing Plan</th>
       <th>Floor Plan</th>
       <th>Elevated Plan</th>
-      <th>Click To Update</th>
+      <th>
+            Status
+      </th>
     </tr>
     {% for plan in plans %}
     <tr>
@@ -57,20 +49,15 @@
       <td><a href="{{ plan.elevated_plan.url}}">
         <img src="{{ plan.elevated_plan.url}}" class="rounded-circle" width="100px" height="100spx">
     </a></td>
-        {% if plan.construction %}
-          <td>Under Construction</td>
-        {% else %}
-        <td>
-          {% if isAdmin%}
-            <form action="{% url 'update_plan' plan.id %}">
-          {% else %}
-            <form action="{% url 'update_client_plan' plan.id%}">
-          {% endif %}
-            {%csrf_token%}
-            <button name="status" class="btn btn-primary">{{plan.status}}</button>
-            </form>
-          </td>
-        {% endif %}
+      {% if plan.construction %}
+      <td><a href="{% url 'get_s_construction' plan.construction.id %}">Under Construction</a> </td>
+      {% else %}
+      <td>
+        <form action="{% url 'new_construction' plan.id %}">
+          <button name='new_construction' class='btn btn-success'>Create Construction</button>
+        </form>
+      </td>      
+      {% endif %}
     </tr>
     {% endfor %}
   </table>
