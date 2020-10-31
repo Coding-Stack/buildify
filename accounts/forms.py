@@ -25,7 +25,7 @@ class ConstructionUpdateForm(forms.ModelForm):
 class WorkerRegistrationForm(forms.ModelForm):
     class Meta:
         model = Worker
-        fields = ['wage','prev_record','construction']
+        fields = ['prev_record','construction']
 
 class WorkerUpdateForm(forms.ModelForm):
     class Meta:

@@ -44,6 +44,40 @@ def register(request):
     else:
         return render(request, 'signup.html')
 
+
+def worker_form(request):
+    return render(request,'worker_form.html')
+
+def apply(request):
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        username = request.POST['username']
+        email = request.POST['email'] 
+        password = request.POST['password'] 
+        re_password = request.POST['confirm_password'] 
+        if password==re_password:
+            if User.objects.filter(username=username).exists():
+                messages.error(request, 'Username already exists')
+                return redirect('signup')
+            elif User.objects.filter(email=email).exists():
+                messages.error(request, 'Emails already exists')
+                return redirect('signup')
+            else:
+                user = User.objects.create_user(first_name=first_name, password=password,email=email,username=username)
+                user.save() 
+                prev_record = request.POST['prev_record']
+                work_done = request.POST['work_done']              
+                worker = Worker(user=user,prev_record=prev_record,work_done=work_done)
+                worker.save()
+                auth.login(request, user)
+                return redirect('home')
+        else:
+            messages.info(request, "Password did not Match")
+            return redirect('signup')
+    else:
+        return render(request, 'signup.html')
+
+
 def signin(request):
     if request.method == 'POST':
         email = request.POST['email']
@@ -91,7 +125,8 @@ def new_plan(request):
             client = Client.objects.filter(user=request.user).first()
             plan = Plan(length=length,width=width,rooms=rooms,wall_thickness=wall_thickness,floors=floors,parking=parking,client=client)
             plan.save()
-            return HttpResponse('Thank you!!Our team will shortly design the best plan suited for you')
+            messages.success(request,'Thank you!!Our team will shortly design the best plan suited for you')
+            return render('home')
         else:
             form = PlanRegistrationForm()
     else:

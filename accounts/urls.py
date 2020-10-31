@@ -20,6 +20,8 @@ urlpatterns = [
     path('get_worker',v.get_worker,name='get_worker'),
     path('update_worker/<int:id>',v.update_worker,name='update_worker'),
     path('get_const_worker/<int:id>',v.get_const_worker,name='get_const_worker'),
+    path('worker_form',v.worker_form,name='worker_form'),
+    path('apply',v.apply,name='apply')
 ]
 
 from django.conf import settings
