@@ -13,6 +13,7 @@
     <a href = "{% url 'get_construction' 'excavation'%}" class='text-info'>My Construction</a>
 </div>
 {% endif %}
+<<<<<<< HEAD
 {% if curr_user == 'Worker'%}
 <p>Hi Worker</p>
     <a href = "{% url 'new_plan' %}" class="text-info"><i class="fa fa-building" aria-hidden="true"></i>   Generate Request for New Plan</a>
@@ -28,5 +29,34 @@
     <a href ="{% url 'get_worker' %}" class='text-info'><i class="fas fa-users-cog"></i>  Workers</a>
     <a href ="{% url 'get_material' %}" class='text-info'><i class="fa fa-industry" aria-hidden="true"></i>   Materials</a>
 </div>
+=======
+{% if curr_user == 'Admin' %}
+<div style="display: flex; justify-content: space-evenly; margin: 30px 0;" >
+<a href = "{% url 'new_plan'%}"class='btn btn-success'>Start a Plan</a>
+<a href = "{% url 'get_adminplan' 'new' %}" class='btn btn-danger'>All Plan Requests</a>
+<a href ="{% url 'get_adminconstruction' 'excavation' %}" class='btn btn-primary'>Constructions</a>
+<a href ="{% url 'get_worker' %}" class='btn btn-warning'>Workers</a>
+<a href ="{% url 'get_material' %}" class='btn btn-primary'>Materials</a>
+</div>
+{% endif %}
+{% if curr_user == 'Worker'%}
+<p>Hi Worker</p>
+    <a href = "{% url 'new_plan' %}" class="text-info"><i class="fa fa-building" aria-hidden="true"></i>   Generate Request for New Plan</a>
+    <a href = "{% url 'get_plan' 'pending' %}" class='text-info'><i class="fas fa-spinner fa-pulse"></i>   Pending Plans</a>
+    <a href = "{% url 'get_plan' 'new' %}" class = 'text-info'><i class="fa fa-paper-plane" aria-hidden="true"></i>   New plans</a>
+</div>
+{% endif %}
+{% if curr_user == 'Admin' %}
+<div class="links">
+    <a href = "{% url 'new_plan'%}"class='text-info'><i class="fa fa-hourglass-start" aria-hidden="true"></i>   Start a Plan</a>
+    <a href = "{% url 'get_plan' 'adminnew' %}" class='text-info'><i class="fas fa-list"></i>   All Plan Requests</a>
+    <a href ="{% url 'get_construction' 'adminexcavation' %}" class='text-info'><i class="fa fa-tools"></i>   Constructions</a>
+    <a href ="{% url 'get_worker' %}" class='text-info'><i class="fas fa-users-cog"></i>  Workers</a>
+</div>
+{% endif %}
+{% if curr_user == 'Worker'%}
+<p>Woeker</p>
+<p>{{ Worker.wage }}</p>
+>>>>>>> e02f4810f015fab6c7d54cc03ac45ee694a4080c
 {% endif %}
 {% endblock content %}
