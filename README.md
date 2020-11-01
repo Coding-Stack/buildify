@@ -16,9 +16,8 @@
    ``` sh
       python -m pip install Django
    ```
- ### Deployment
+ ### Make necessary Migrations
   
-  #### Make Migrations
    ``` sh
      python manage.py makemigrations
    ```
