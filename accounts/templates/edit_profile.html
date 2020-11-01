@@ -1,4 +1,14 @@
 {% extends 'header.html' %}
 {% block content %}
+<p><b>Name:</b>{{user.first_name}}</p><br><br>
+{% if user.worker.construction %}
+{% for const in user.worker.construction %}
+<p> Your Constructions are : {{const}}</p>
+{% endfor %}
+{% else %}
+<p>No Constructions Assigned As of Now!</p>
+{% endif %}
 <p><b>Name:</b>{{user.first_name}}</p>
+<p><a href="{% url 'update_workerprofile' user.worker.id %}">Click Here to Update Profile</a></p>
+
 {% endblock content %}

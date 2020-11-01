@@ -17,6 +17,9 @@
       <th>Status</th>
       <th>Estimated Cost</th>
       <th>Open Construction</th>
+      {% if const.status == 'finished'%}
+      <th>Get Bill</th>
+      {% endif %}
     </tr>
     {% for const in constructions %}
     <tr>
@@ -30,6 +33,11 @@
           <button name='status' class="btn btn-warning">View Construction</button>
         </form>
       </td>
+      {% if const.status == 'finished'%}
+      <td>
+        <a href="{% url 'get_bill' const.id%}" class='btn btn-warning'>Get Bill</a>
+      </td>
+      {%endif%}
     </tr>
     {% endfor %}
   </table>

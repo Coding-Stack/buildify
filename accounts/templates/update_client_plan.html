@@ -4,24 +4,25 @@
     {% for message in messages %}
         <h3>{{message}}</h3>
     {% endfor %}
-    <div >Sectional Plan:
+    <br><br>
+    <div >Sectional Plan:--
         <a href="{{media_url}}{{ plan.sectional_plan.url}}">
-            <img src="{{media_url}}{{ plan.sectional_plan.url }}" class="rounded-circle" width="100px" height="100px">
+            <img src="{{media_url}}{{ plan.sectional_plan.url }}" class="square" width="1000px" height="800px">
         </a>
-    </div>
-    <div >Drawing Plan:
+    </div><br><br>
+    <div >Drawing Plan:--
         <a href="{{media_url}}{{ plan.drawing_plan.url}}">
-            <img src="{{media_url}}{{ plan.drawing_plan.url }}" class="rounded-circle" width="100px" height="100px">
+            <img src="{{media_url}}{{ plan.drawing_plan.url }}" class="square" width="1000px" height="800px">
         </a>
-    </div>
-    <div >Elevated Plan:
+    </div><br><br>
+    <div >Elevated Plan:--
         <a href="{{media_url}}{{ plan.elevated_plan.url}}">
-            <img src="{{media_url}}{{ plan.elevated_plan.url }}" class="rounded-circle" width="100px" height="100px">
+            <img src="{{media_url}}{{ plan.elevated_plan.url }}" class="square" width="1000px" height="800px">
         </a>
-    </div>
-    <div >----Floor Plan:
+    </div><br><br>
+    <div >----Floor Plan:--
         <a href="{{media_url}}{{ plan.floor_plan.url}}">
-            <img src="{{media_url}}{{ plan.floor_plan.url }}" class="rounded-circle" width="100px" height="100px">
+            <img src="{{media_url}}{{ plan.floor_plan.url }}" class="square" width="1000px" height="800px">
         </a>
     </div>
     <div class="container">

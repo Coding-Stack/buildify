@@ -1,0 +1,63 @@
+{% extends 'header.html'%}
+{% block content%}
+{% for message in messages %}
+<h3>{{message}}</h3>
+{% endfor %}
+<h1 style='text-align: center;color: red;'>Bill</h1>
+<br><br>
+<h1 style='text-align: center;color: red;'>All Materials</h1>
+{% if materials%}
+<table class="table table-bordered">
+    <tr>
+      <th>Id</th>
+      <th>Material Image</th>
+      <th>Material Name</th>
+      <th>Type</th>
+      <th>Cost</th>
+    </tr>
+    {% for material in materials %}
+    <tr>
+      <td>{{ material.id }}</td>
+      <td>
+        <a href="{{media_url}}{{ material.material_img.url}}">
+        <img src="{{media_url}}{{ material.material_img.url }}" class="square" width="150px" height="150px">
+        </a>
+      </td>
+      <td>{{ material.name }}</td>
+      <td>{{ material.material_type }}</td>
+      <td>{{ material.cost }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <h1 style='text-align: center;color: red;'>Total Material Cost: {{material_total}}</h1>
+{% endif %}
+<br><br>
+<h1 style='text-align: center;color: red;'>All Workers</h1>
+{% if workers %}
+<table class="table table-bordered">
+    <tr>
+      <th>Id</th>
+      <th>Worker Name</th>
+      <th>Wage</th>
+      <th>Previous Records</th>
+      <th>Curr. Working Constructions</th>
+    </tr>
+    {% for worker in workers %}
+    <tr>
+      <td>{{ worker.id }}</td>
+      <td>{{ worker.user.first_name }}</td>
+      <td>{{ worker.wage }}</td>
+      <td>{{ worker.prev_record}}</td>
+      <td>{{ worker.construction }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <h1 style='text-align: center;color: red;'>Total Workers Cost: {{workers_total}}</h1>
+  <br><br>
+  <h1 style='text-align: center;color: red;'>Total Construction Cost: {{total}}</h1>
+{% endif %}
+<br><br>
+<div style='display:flex;justify-content:space-evenly;'>
+<a href='https://razorpay.com/' style='text-align: center;color: red;justify-content: space-evenly;' class='btn btn-success' >Pay </a>
+</div>
+{% endblock content %}

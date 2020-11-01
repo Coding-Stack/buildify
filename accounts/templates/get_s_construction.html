@@ -51,21 +51,22 @@
       {% endif %}
     </tr>
   </table>
+  <br><br>
   <div>Excavation Image:
     <a href="{{ const.excavation_img.url}}">
-        <img src="{{ const.excavation_img.url}}" class="square" >
+        <img src="{{ const.excavation_img.url}}" class="square" width="1000px" height='800px' >
     </a>
-</div>
+</div><br><br>
 <div>Foundation Image:
     <a href="{{ const.foundation_img.url}}">
-        <img src="{{ const.foundation_img.url}}" class="square">
+        <img src="{{ const.foundation_img.url}}" class="square" width='1000px' height='800px'>
     </a>
-</div>
-<div>Finished Image:
+</div><br><br>
+<div>Finished Image:--
     <a href="{{ const.finished_img.url}}">
-        <img src="{{ const.finished_img.url}}" class="square">
+        <img src="{{ const.finished_img.url}}" class="square" width='1000px' height='800px'>
     </a>
-</div>
+</div><br><br>
 {% else %}
 <h1>Oops! Your construction Yet to reach this stage :))</h1>
 {% endif %}

@@ -30,31 +30,34 @@ def signup(request):
     return render(request,'signup.html')
 
 def register(request):
-    if request.method == 'POST':
-        first_name = request.POST.get('first_name')
-        username = request.POST['username']
-        email = request.POST['email'] 
-        password = request.POST['password'] 
-        re_password = request.POST['confirm_password'] 
-        if password==re_password:
-            if User.objects.filter(username=username).exists():
-                messages.error(request, 'Username already exists')
-                return redirect('signup')
-            elif User.objects.filter(email=email).exists():
-                messages.error(request, 'Emails already exists')
-                return redirect('signup')
-            else:
-                user = User.objects.create_user(first_name=first_name, password=password,email=email,username=username)
-                user.save()
-                client = Client(user=user)
-                client.save()
-                auth.login(request, user)
-                return redirect('home')
-        else:
-            messages.info(request, "Password did not Match")
-            return redirect('signup')
+    if request.user.is_authenticated:
+        return redirect('/home')
     else:
-        return render(request, 'signup.html')
+        if request.method == 'POST':
+            first_name = request.POST.get('first_name')
+            username = request.POST['username']
+            email = request.POST['email'] 
+            password = request.POST['password'] 
+            re_password = request.POST['confirm_password'] 
+            if password==re_password:
+                if User.objects.filter(username=username).exists():
+                    messages.error(request, 'Username already exists')
+                    return redirect('signup')
+                elif User.objects.filter(email=email).exists():
+                    messages.error(request, 'Emails already exists')
+                    return redirect('signup')
+                else:
+                    user = User.objects.create_user(first_name=first_name, password=password,email=email,username=username)
+                    user.save()
+                    client = Client(user=user)
+                    client.save()
+                    auth.login(request, user)
+                    return redirect('home')
+            else:
+                messages.info(request, "Password did not Match")
+                return redirect('signup')
+        else:
+            return render(request, 'signup.html')
 
 
 def worker_form(request):
@@ -238,7 +241,7 @@ def new_construction(request, id):
 def update_construction(request, id):
     if request.method == 'POST':
         construction = Construction.objects.get(id = request.POST.get('const_id',None))
-        form = ConstructionUpdateForm(request.POST,instance=construction)
+        form = ConstructionUpdateForm(request.POST,request.FILES,instance=construction)
         if form.is_valid():
             form.save()
             messages.success(request,f'Construction Updated Successfully')
@@ -349,3 +352,23 @@ def update_material(request, id):
 def get_material(request):
     materials = Material.objects.all()
     return render(request, 'get_material.html', {'materials':materials})
+
+
+@login_required
+def get_bill(request, id):
+    construction = Construction.objects.get(id=id)
+    workers = Worker.objects.filter(construction=construction)
+    materials = Material.objects.filter(construction=construction)
+    material_total = 0
+    for mat in materials:
+        material_total = material_total + mat.cost
+    worker_total = 0
+    for wo in workers:
+        worker_total = worker_total + wo.wage
+    total = material_total + worker_total
+    return render(request,'get_bill.html',{'workers':workers,'materials':materials,'material_total':material_total,'workers_total':worker_total,'total':total})
+
+@login_required
+def update_workerprofile(request, id):
+    pass
+

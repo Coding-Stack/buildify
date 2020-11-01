@@ -49,5 +49,5 @@ class MaterialUpdateForm(forms.ModelForm):
 
 class WorkerProfileUpdateForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ['first_name']
+        model = Worker
+        fields = ['prev_record','work_done']

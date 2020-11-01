@@ -66,7 +66,7 @@ class Construction(models.Model):
         ('finished','finished'),
     ]
     status = models.CharField(max_length=20,choices=status_choices_const,default='excavation')
-    materials = models.ManyToManyField(to=Material,blank=True,null=True)
+    materials = models.ManyToManyField(to=Material,blank=True)
     excavation_img = models.ImageField(upload_to='construction',default='default.png')
     foundation_img = models.ImageField(upload_to='construction',default='default.png')
     finished_img = models.ImageField(upload_to='construction',default='default.png')

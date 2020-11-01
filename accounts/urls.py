@@ -33,7 +33,9 @@ urlpatterns = [
     path('update_material/<int:id>',v.update_material,name='update_material'),
 
     path('worker_form',v.worker_form,name='worker_form'),
-    path('apply',v.apply,name='apply')
+    path('apply',v.apply,name='apply'),
+    path('update_workerprofile/<int:id>',v.update_workerprofile,name='update_workerprofile'),
+    path('get_bill/<int:id>',v.get_bill,name='get_bill'),
 ]
 
 from django.conf import settings
