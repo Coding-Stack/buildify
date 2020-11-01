@@ -13,6 +13,12 @@ def index(request):
         return redirect('/home')
     return render(request,'index.html')
 
+def contact(request):
+    return render(request,'contact.html')
+
+def about_us(request):
+    return render(request,'about_us.html')
+
 def login(request):
     if request.user.is_authenticated:
         return redirect('/home')
@@ -104,6 +110,10 @@ def signin(request):
             return redirect('login')              
     else:
         return render(request, 'login.html')
+
+@login_required
+def edit_profile(request):
+    return render(request,'edit_profile.html',{'user':request.user})
 
 @login_required
 def home(request):

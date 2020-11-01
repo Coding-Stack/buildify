@@ -46,3 +46,8 @@ class MaterialUpdateForm(forms.ModelForm):
     class Meta:
         model = Material
         fields = ['name', 'material_type', 'cost', 'material_img']
+
+class WorkerProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name']

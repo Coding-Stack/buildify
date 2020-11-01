@@ -109,6 +109,11 @@ body {
     color: black;
 }
 
+.contact{
+  text-align: center;
+  margin:50px 50px;
+}
+
 @media only screen and (min-width: 775px) {
   .navbar {
     display: flex;
@@ -168,19 +173,19 @@ body {
         <a href="{% url 'home' %}" class="nav-links">Home</a>
       </li>
       <li>
-        <a href="{% url 'about_us' %}" class="nav-links">About Us</a>
+        <a href="{%url 'about_us' %}" class="nav-links">About Us</a>
       </li>
       <li>
         <a href="{% url 'contact' %}" class="nav-links">Contact Us</a>
       </li>
-      <li>
-        <a href="{% url 'logout' %}" class="nav-links">Logout</a>
-      </li>
     </ul>
   </nav>
-
-<body>
-    {% block content %}
-    {% endblock content %}
-</body>
-</html>
+  <div class='contact'>
+      <p><b>Email:</b>buildify@construct.com</p>
+      <p><b>Phone Number:</b>9191919191</p>
+      <p>
+          <b>Address:</b><br>
+          Road No.2,Gachibowli<br>
+          Hyderabad,500072
+      </p>
+  </div>

@@ -109,6 +109,11 @@ body {
     color: black;
 }
 
+.contact{
+  text-align: center;
+  margin:50px 50px;
+}
+
 @media only screen and (min-width: 775px) {
   .navbar {
     display: flex;
@@ -168,19 +173,16 @@ body {
         <a href="{% url 'home' %}" class="nav-links">Home</a>
       </li>
       <li>
-        <a href="{% url 'about_us' %}" class="nav-links">About Us</a>
+        <a href="{%url 'about_us' %}" class="nav-links">About Us</a>
       </li>
       <li>
         <a href="{% url 'contact' %}" class="nav-links">Contact Us</a>
       </li>
-      <li>
-        <a href="{% url 'logout' %}" class="nav-links">Logout</a>
-      </li>
     </ul>
   </nav>
-
-<body>
-    {% block content %}
-    {% endblock content %}
-</body>
-</html>
+  <div class='contact'>
+    <b>We have started this journey in the year 2020<br>
+    Our Ulimate aim is to provide our customers an easy way to make construction and other services happen.<br>
+    The customers can now just sit back at home and can get all the benefits of customizing the construction and track what's going on.<br>
+    We also offer jobs to workers and are open to work woth us by submitting the form and we'll assign a project in your domain.<br></b>
+  </div>
