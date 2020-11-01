@@ -116,7 +116,8 @@ def signin(request):
 
 @login_required
 def edit_profile(request):
-    return render(request,'edit_profile.html',{'user':request.user})
+    worker = Worker.objects.filter(user=request.user).first()
+    return render(request,'edit_profile.html',{'user':request.user,'worker':worker})
 
 @login_required
 def home(request):
@@ -245,6 +246,7 @@ def update_construction(request, id):
         if form.is_valid():
             form.save()
             messages.success(request,f'Construction Updated Successfully')
+            return redirect('home')
         else:
             form = ConstructionUpdateForm(instance=construction)
     else:
@@ -298,6 +300,7 @@ def update_worker(request, id):
             form.save()
             messages.success(request,f'Worker Updated Successfully')
             worker.save()
+            return redirect('get_worker')
         else:
             form = WorkerUpdateForm(instance=worker)
     else:
